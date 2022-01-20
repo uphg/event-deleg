@@ -1,0 +1,42 @@
+{
+  "name": "event-deleg",
+  "version": "0.0.1-alpha.0",
+  "license": "MIT",
+  "author": "Lv Heng",
+  "description": "A javascript event delegation library",
+  "keywords": [
+    "javascript",
+    "event",
+    "delegation"
+  ],
+  "main": "./dist/index.umd.js",
+  "module": "./dist/index.es.js",
+  "types": "./types/index.d.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.es.js",
+      "require": "./dist/index.umd.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uphg/event-deleg.git"
+  },
+  "bugs": {
+    "url": "https://github.com/uphg/event-deleg/issues"
+  },
+  "homepage": "https://github.com/uphg/event-deleg#readme",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.10",
+    "rollup": "^2.64.0",
+    "rollup-plugin-typescript2": "^0.31.1",
+    "typescript": "^4.4.4",
+    "vite": "^2.7.0"
+  }
+}
