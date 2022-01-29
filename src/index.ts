@@ -9,14 +9,14 @@ interface ListenerCallback {
 
 export function on(
   element: HTMLElement | Document | Window,
-  eventType: string,
+  eventName: string,
   selector: string | ListenerCallback,
-  callback?: ListenerCallback
+  handler?: ListenerCallback
 ) {
-  if (!element || !eventType || !selector) return
+  if (!element || !eventName || !selector) return
   if (typeof selector === 'function') {
     (selector as ListenerCallback)[LISTEN] = true
-    element.addEventListener(eventType, selector)
+    element.addEventListener(eventName, selector)
   } else {
     const listener =  (e: Event) => {
       let el = e.target
@@ -27,11 +27,11 @@ export function on(
         }
         el = (el as Element)?.parentNode
       }
-      el && (callback as ListenerCallback).call(el, e, el)
+      el && (handler as ListenerCallback).call(el, e, el)
     }
-    if (callback) {
-      callback[DELEG] = listener
-      element.addEventListener(eventType, listener)
+    if (handler) {
+      handler[DELEG] = listener
+      element.addEventListener(eventName, listener)
     }
   }
   return element
@@ -39,15 +39,15 @@ export function on(
 
 export function off(
   element: HTMLElement | Document | Window,
-  eventType: string,
-  callback: ListenerCallback
+  eventName: string,
+  handler: ListenerCallback
 ) {
-  if (!element || !eventType || !callback) return
-  if (callback[LISTEN]) {
-    callback[LISTEN] = null
-    element.removeEventListener(eventType, callback)
+  if (!element || !eventName || !handler) return
+  if (handler[LISTEN]) {
+    handler[LISTEN] = null
+    element.removeEventListener(eventName, handler)
   }
-  const deleg = callback[DELEG]
-  deleg && element.removeEventListener(eventType, deleg)
+  const deleg = handler[DELEG]
+  deleg && element.removeEventListener(eventName, deleg)
   return element
 }
