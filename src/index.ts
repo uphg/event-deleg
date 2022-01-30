@@ -1,22 +1,25 @@
 const DELEG = Symbol('delegateEvent')
 const LISTEN = Symbol('listenerState')
 
-interface ListenerCallback {
+interface EventDelegHandler {
   (e: Event, ...args: unknown[]): unknown
   [DELEG]?: EventListenerOrEventListenerObject
   [LISTEN]?: boolean | null
 }
 
+type EventDelegOptions = boolean | AddEventListenerOptions | undefined
+
 export function on(
   element: HTMLElement | Document | Window,
   eventName: string,
-  selector: string | ListenerCallback,
-  handler?: ListenerCallback
+  selector: string | EventDelegHandler,
+  handler?: EventDelegHandler | EventDelegOptions,
+  options?: EventDelegOptions
 ) {
   if (!element || !eventName || !selector) return
   if (typeof selector === 'function') {
-    (selector as ListenerCallback)[LISTEN] = true
-    element.addEventListener(eventName, selector)
+    selector[LISTEN] = true
+    element.addEventListener(eventName, selector, (handler as EventDelegOptions))
   } else {
     const listener =  (e: Event) => {
       let el = e.target
@@ -25,13 +28,13 @@ export function on(
           el = null
           break
         }
-        el = (el as Element)?.parentNode
+        el = (el as Node)?.parentNode
       }
-      el && (handler as ListenerCallback).call(el, e, el)
+      el && (handler as EventDelegHandler).call(el, e, el)
     }
     if (handler) {
-      handler[DELEG] = listener
-      element.addEventListener(eventName, listener)
+      (handler as EventDelegHandler)[DELEG] = listener
+      element.addEventListener(eventName, listener, options)
     }
   }
   return element
@@ -40,14 +43,15 @@ export function on(
 export function off(
   element: HTMLElement | Document | Window,
   eventName: string,
-  handler: ListenerCallback
+  handler: EventDelegHandler,
+  options?: EventDelegOptions
 ) {
   if (!element || !eventName || !handler) return
   if (handler[LISTEN]) {
     handler[LISTEN] = null
-    element.removeEventListener(eventName, handler)
+    element.removeEventListener(eventName, handler, options)
   }
   const deleg = handler[DELEG]
-  deleg && element.removeEventListener(eventName, deleg)
+  deleg && element.removeEventListener(eventName, deleg, options)
   return element
 }

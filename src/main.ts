@@ -57,8 +57,8 @@ const createEl = (tagName: string) => {
     console.log('li 被委托')
   }
   on(div, 'click', 'li', clickLi)
+
   on(clear1, 'click', () => {
-    console.log('清除委托事件')
     off(div, 'click', clickLi)
   })
 }
