@@ -39,27 +39,16 @@ const createEl = (tagName: string) => {
 
 {
   console.log('事件监听')
-  const clear1 = createEl('button')
-  clear1.textContent = '清除委托事件'
-  const div = createEl('div')
-  const ul = createEl('ul')
-  const li1 = createEl('li')
-  const li2 = createEl('li')
-  const li3 = createEl('li')
-  ul.appendChild(li1)
-  ul.appendChild(li2)
-  ul.appendChild(li3)
-  div.appendChild(ul)
-  div.appendChild(clear1)
-  div.classList.add('parent')
+  const clear1 = document.querySelector<HTMLDivElement>('#clear1')
+  const div = document.querySelector<HTMLDivElement>('.parent')!
   app.appendChild(div)
   const clickLi = () => {
     console.log('li 被委托')
   }
-  on(div, 'click', 'li', clickLi)
+  on(div, 'click', 'li', clickLi, true)
 
-  on(clear1, 'click', () => {
-    off(div, 'click', clickLi)
+  on(clear1 as HTMLElement, 'click', () => {
+    off(div, 'click', clickLi, true)
   })
 }
 
