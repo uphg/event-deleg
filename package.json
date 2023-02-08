@@ -1,5 +1,5 @@
 {
-  "name": "event-delegation",
+  "name": "event-deleg",
   "version": "0.0.1-alpha.1",
   "license": "MIT",
   "author": "Lv Heng",
@@ -21,12 +21,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/uphg/event-delegation.git"
+    "url": "git+https://github.com/uphg/event-deleg.git"
   },
   "bugs": {
-    "url": "https://github.com/uphg/event-delegation/issues"
+    "url": "https://github.com/uphg/event-deleg/issues"
   },
-  "homepage": "https://github.com/uphg/event-delegation#readme",
+  "homepage": "https://github.com/uphg/event-deleg#readme",
   "scripts": {
     "dev": "vite",
     "build": "node scripts/build.js",
