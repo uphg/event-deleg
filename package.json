@@ -1,6 +1,6 @@
 {
-  "name": "event-deleg",
-  "version": "0.0.1-alpha.0",
+  "name": "event-delegation",
+  "version": "0.0.1-alpha.1",
   "license": "MIT",
   "author": "Lv Heng",
   "description": "A javascript event delegation library",
@@ -9,40 +9,44 @@
     "event",
     "delegation"
   ],
-  "main": "./dist/index.umd.js",
+  "main": "./dist/index.js",
   "module": "./dist/index.es.js",
   "types": "./types/index.d.js",
   "exports": {
     ".": {
       "import": "./dist/index.es.js",
-      "require": "./dist/index.umd.js"
+      "require": "./dist/index.js"
     },
     "./package.json": "./package.json"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/uphg/event-deleg.git"
+    "url": "git+https://github.com/uphg/event-delegation.git"
   },
   "bugs": {
-    "url": "https://github.com/uphg/event-deleg/issues"
+    "url": "https://github.com/uphg/event-delegation/issues"
   },
-  "homepage": "https://github.com/uphg/event-deleg#readme",
+  "homepage": "https://github.com/uphg/event-delegation#readme",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "node scripts/build.js",
     "test": "jest --watch",
     "preview": "vite preview"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.16.11",
-    "@babel/preset-typescript": "^7.16.7",
-    "@types/jest": "^27.4.0",
-    "@types/node": "^17.0.10",
-    "jest": "^27.4.7",
-    "rollup": "^2.64.0",
-    "rollup-plugin-typescript2": "^0.31.1",
-    "ts-node": "^10.4.0",
-    "typescript": "^4.4.4",
-    "vite": "^2.7.0"
+    "@babel/preset-env": "7.16.11",
+    "@babel/preset-typescript": "7.16.7",
+    "@types/jest": "27.4.0",
+    "@types/node": "17.0.10",
+    "@typescript-eslint/eslint-plugin": "5.7.0",
+    "@typescript-eslint/parser": "5.7.0",
+    "eslint": "8.4.1",
+    "execa": "5.1.1",
+    "jest": "27.4.7",
+    "rollup": "2.64.0",
+    "rollup-plugin-typescript2": "0.31.1",
+    "ts-node": "10.4.0",
+    "typescript": "4.4.4",
+    "vite": "2.7.0"
   }
 }

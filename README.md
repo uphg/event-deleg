@@ -1,25 +1,30 @@
 # Event delegation
 
-一个事件委托库。
+An event delegate library.
 
-## 用法
+## Usage
 
-```js
+```javascript
 const handleClick = () => {
   ...
 }
 
-// 事件监听
+// listener
 on(button, 'click', handleClick)
-// 最后一个参数与，addEventListener 第三个参数作用相同
-// 参考：https://developer.mozilla.org/zh-CN/docs/Web/API/EventTarget/addEventListener
-// 捕获事件
-on(button, 'click', handleClick, true)
+
+// stop
 off(button, 'click', handleClick)
 
-// 事件委托
+// The last parameter is the same as the third parameter of addEventListener
+// See https://developer.mozilla.org/zh-CN/docs/Web/API/EventTarget/addEventListener
+on(button, 'click', handleClick, true)
+
+// event delegation
 on(div, 'click', 'li', handleClick)
-// 捕获事件
-on(div, 'click', 'li', handleClick, true)
+
+// stop
 off(div, 'click', handleClick)
+
+// capture
+on(div, 'click', 'li', handleClick, true)
 ```
