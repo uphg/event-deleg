@@ -1,18 +1,20 @@
+import type { EventHandler } from './types'
+
 const delegateHandler = Symbol('delegateHandler')
 
 export interface EventDelegHandler {
-  (e: Event, ...args: unknown[]): unknown
+  (e: Event, target?: EventTarget): unknown
   [delegateHandler]?: EventListenerOrEventListenerObject
 }
 
 export type EventDelegOptions = boolean | EventListenerOptions | undefined
-export type EventDelegElement = HTMLElement | Document | Window
+export type EventDelegElement = Element | Document | Window
 
 export function on(
   el: EventDelegElement,
   eventName: string,
-  selector: string | EventDelegHandler,
-  handler?: EventDelegHandler | EventDelegOptions,
+  selector: string | EventHandler,
+  handler?: EventHandler | EventDelegOptions,
   options?: EventDelegOptions
 ) {
   if (!el || !eventName || !selector) return
@@ -29,9 +31,9 @@ export function on(
         }
         target = (target as Node)?.parentNode
       }
-      target && handler.call(target, event, target)
+      target && (handler as EventDelegHandler).call(target, event)
     }
-    handler[delegateHandler] = listener
+    (handler as EventDelegHandler)[delegateHandler] = listener
     el.addEventListener(eventName, listener, options)
   }
 
@@ -41,13 +43,13 @@ export function on(
 export function off(
   el: EventDelegElement,
   eventName: string,
-  handler: EventDelegHandler,
+  handler: EventHandler,
   options?: EventDelegOptions
 ) {
   if (!el || !eventName || !handler) return
 
   el.removeEventListener(eventName, handler, options)
-  const deleg = handler[delegateHandler]
+  const deleg = (handler as EventDelegHandler)?.[delegateHandler]
   deleg && el.removeEventListener(eventName, deleg, options)
 
   return el
