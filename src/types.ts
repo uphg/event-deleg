@@ -1,3 +1,3 @@
-export interface EventHandler<T extends Event = any> {
-  (e: T): void
+export interface EventHandler<T, Evt extends Event = any> {
+  (this: T, ev: Evt): void
 }
